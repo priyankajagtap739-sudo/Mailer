@@ -14,7 +14,7 @@ source.include_patterns = session.json
 version = 1.0
 
 # App requirements — ALL Python packages the app needs
-requirements = python3==3.11.0,kivy==2.3.0,requests,markdown2,certifi,charset_normalizer,idna,urllib3
+requirements = python3,kivy,requests,markdown2,certifi,openssl,idna,urllib3,charset_normalizer
 
 # Icon & splash (place icon.png / presplash.png in project root to customise)
 # icon.filename = %(source.dir)s/icon.png
