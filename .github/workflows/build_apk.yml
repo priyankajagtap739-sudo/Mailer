@@ -1,0 +1,66 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:          # allows manual trigger from GitHub UI
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+
+    steps:
+      # ── 1. Checkout repo ────────────────────────────────────
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ── 2. Set up Python ────────────────────────────────────
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # ── 3. Install system dependencies ──────────────────────
+      - name: Install system packages
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            git zip unzip openjdk-17-jdk \
+            autoconf libtool pkg-config \
+            zlib1g-dev libncurses5-dev libncursesw5-dev \
+            libtinfo5 cmake libffi-dev libssl-dev \
+            python3-dev python3-pip \
+            libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
+            libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev \
+            libunwind-dev
+
+      # ── 4. Install Buildozer ─────────────────────────────────
+      - name: Install Buildozer
+        run: |
+          pip install --upgrade pip setuptools
+          pip install buildozer cython
+
+      # ── 5. Cache Android SDK / NDK / p4a (speeds up builds) ─
+      - name: Cache Buildozer global state
+        uses: actions/cache@v4
+        with:
+          path: ~/.buildozer
+          key: buildozer-${{ runner.os }}-${{ hashFiles('buildozer.spec') }}
+          restore-keys: |
+            buildozer-${{ runner.os }}-
+
+      # ── 6. Build debug APK ───────────────────────────────────
+      - name: Build APK
+        run: buildozer android debug
+        env:
+          ANDROIDAPI: "33"
+          ANDROIDMINAPI: "21"
+
+      # ── 7. Upload APK as GitHub artifact ────────────────────
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ModernBulkMailer-debug-apk
+          path: bin/*.apk
+          retention-days: 14
