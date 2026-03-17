@@ -29,7 +29,9 @@ android.minapi = 21
 android.ndk_path = 
 android.sdk_path = 
 android.ndk = 25b
-android.arch = arm64-v8a
+android.archs = arm64-v8a
+android.build_tools_version = 33.0.0
+android.accept_sdk_license = True
 
 # Permissions
 android.permissions = INTERNET,READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE
