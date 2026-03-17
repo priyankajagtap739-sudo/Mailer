@@ -12,8 +12,6 @@ source.include_patterns = session.json
 
 # Version
 version = 1.0
-version.regex = __version__ = ['"](.*)['"]
-version.filename = %(source.dir)s/main.py
 
 # App requirements — ALL Python packages the app needs
 requirements = python3==3.11.0,kivy==2.3.0,requests,markdown2,certifi,charset_normalizer,idna,urllib3
