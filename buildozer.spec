@@ -14,7 +14,7 @@ source.include_patterns = session.json
 version = 1.0
 
 # App requirements — ALL Python packages the app needs
-requirements = python3,kivy,requests,markdown2,certifi,openssl,idna,urllib3,charset_normalizer
+requirements = python3,kivy,requests,markdown2,openssl
 
 # Icon & splash (place icon.png / presplash.png in project root to customise)
 # icon.filename = %(source.dir)s/icon.png
@@ -24,11 +24,11 @@ requirements = python3,kivy,requests,markdown2,certifi,openssl,idna,urllib3,char
 orientation = portrait
 
 # Android
-android.api = 33
+android.api = 31
 android.minapi = 21
+android.ndk_path = 
+android.sdk_path = 
 android.ndk = 25b
-android.sdk = 33
-android.ndk_api = 21
 android.arch = arm64-v8a
 
 # Permissions

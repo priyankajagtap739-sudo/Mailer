@@ -53,14 +53,17 @@ jobs:
       # ── 6. Accept Android SDK Licenses ──────────────────────
       - name: Accept Android SDK Licenses
         run: |
+          mkdir -p ~/.android
+          touch ~/.android/repositories.cfg
           yes | sdkmanager --licenses || true
 
       # ── 7. Build debug APK ───────────────────────────────────
       - name: Build APK
         run: |
-          yes | buildozer android debug
+          buildozer android debug
         env:
-          ANDROIDAPI: "33"
+          ACCEPT_SDK_LICENSE: "1"
+          ANDROIDAPI: "31"
           ANDROIDMINAPI: "21"
 
       # ── 7. Upload APK as GitHub artifact ────────────────────
